@@ -34,12 +34,11 @@ dynamoDBCurrent = function(context, input, callback, dateSequence, dateTime){
         UpdateUser: { "S": input.user },
         Sequence: { "S": input.sequence }
     }
-    console.log(item);
     var params = {
         TableName: tableName,
         Item: item
     }
-    console.log("INFO: writing SRRI Current record");
+    console.log("INFO: writing SRRI Current record ", item);
     dynamo.putItem(params, function (err, data) {
         if (err) {
             console.log("ERROR: writing SRRI Current record", err);
@@ -57,12 +56,11 @@ dynamoDBCurrent = function(context, input, callback, dateSequence, dateTime){
 dynamoDBHistory = function(item, callback){
     var dynamo = new aws.DynamoDB();
     var tableName = "SRRIHistory";
-    console.log(item);
     var params = {
         TableName: tableName,
         Item: item
     }
-    console.log("INFO: writing SRRI History record");
+    console.log("INFO: writing SRRI History record ", item);
     dynamo.putItem(params, function (err, data) {
         if (err) {
             console.log("ERROR: writing SRRI History record", err);
@@ -76,28 +74,27 @@ dynamoDBHistory = function(item, callback){
     });
 }
 
-dynamoDBAudit = function(itemx, callback){
+dynamoDBAudit = function(itemX, callback){
     var dynamo = new aws.DynamoDB();
     var tableName = "SRRIAudit";
-    console.log(item);
     var item ={
-       RequestUUID: { "S": item.requestUUID },
-        ISIN: { "S": item.ISIN },
-        Volatility: {"S" : item.volatility},
-        RiskScore: {"S": item.riskScore},
-        Category: {"S": item.category},
-        Frequency: { "S": item.frequency },
-        CreatedTimeStamp: { "N": item.dateSequence },
-        CreatedDateTime: { "S": item.dateTime },
-        UpdateUser: { "S": item.user },
-        Sequence: { "S": item.sequence } 
+       RequestUUID: { "S": itemX.requestUUID },
+        ISIN: { "S": itemX.ISIN },
+        Volatility: {"S" : itemX.volatility},
+        RiskScore: {"S": itemX.riskScore},
+        Category: {"S": itemX.category},
+        Frequency: { "S": itemX.frequency },
+        CreatedTimeStamp: { "N": itemX.dateSequence },
+        CreatedDateTime: { "S": itemX.dateTime },
+        UpdateUser: { "S": itemX.user },
+        Sequence: { "S": itemX.sequence } 
     }
 
     var params = {
         TableName: tableName,
         Item: item
     }
-    console.log("INFO: writing SRRI Audit record");
+    console.log("INFO: writing SRRI Audit record ", item);
     dynamo.putItem(params, function (err, data) {
         if (err) {
             console.log("ERROR: writing SRRI Audit record", err);
